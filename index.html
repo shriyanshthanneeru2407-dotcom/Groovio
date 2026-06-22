@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Groovio | Retro YouTube Music Turntable</title>
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Ambient Album Art Background -->
+  <div id="ambient-bg" class="ambient-background"></div>
+
+  <!-- App Wrapper -->
+  <div class="app-container">
+    
+    <!-- Header -->
+    <header>
+      <div class="logo" id="logo-refresh">
+        <img src="logo.png" alt="Groovio Logo" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 8px rgba(255, 0, 51, 0.4);">
+        <span>Groovio</span>
+      </div>
+      
+      <div class="user-profile hidden" id="user-profile">
+        <img src="" alt="User Avatar" class="user-avatar" id="user-avatar">
+        <span id="user-name">YouTube Music Listener</span>
+        <button class="logout-btn" id="logout-btn" title="Disconnect">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+            <path d="M5 22a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h7a1 1 0 0 1 0 2H6v16h6a1 1 0 0 1 0 2H5zm10.293-13.707a1 1 0 0 1 1.414 0l4 4a1 1 0 0 1 0 1.414l-4 4a1 1 0 0 1-1.414-1.414L17.586 14H10a1 1 0 0 1 0-2h7.586l-2.293-2.293a1 1 0 0 1 0-1.414z"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- LEFT COLUMN: Deck Panel -->
+      <div class="deck-panel">
+        <!-- Turntable Deck -->
+        <div class="turntable-container">
+          <div class="turntable-deck" id="turntable-deck">
+            <!-- Platter -->
+            <div class="turntable-platter">
+              <!-- Vinyl Record -->
+              <div class="vinyl-record" id="vinyl-record">
+                <!-- Label / Album Art -->
+                <div class="vinyl-label empty" id="vinyl-label">
+                  <!-- Center hole -->
+                  <div class="vinyl-hole"></div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Skeuomorphic Tonearm -->
+            <div class="tonearm" id="tonearm">
+              <div class="tonearm-base"></div>
+              <div class="tonearm-shaft"></div>
+              <div class="tonearm-cartridge"></div>
+            </div>
+
+            <!-- Small corner screw details -->
+            <div class="corner-detail-tr"></div>
+            <div class="corner-detail-br"></div>
+          </div>
+        </div>
+
+        <!-- Playback Info -->
+        <div class="track-info">
+          <h2 class="track-title" id="track-title"><span>No Song Playing</span></h2>
+          <p class="track-artists" id="track-artists">Search & Pin songs to start</p>
+        </div>
+
+        <!-- Progress Scrub Bar -->
+        <div class="progress-container">
+          <span id="time-current">0:00</span>
+          <div class="progress-bar-wrapper" id="progress-wrapper">
+            <div class="progress-bar" id="progress-bar">
+              <div class="progress-knob"></div>
+            </div>
+          </div>
+          <span id="time-total">0:00</span>
+        </div>
+
+        <!-- Control Board -->
+        <div class="controls-container">
+          <!-- Shuffle -->
+          <button class="control-btn" id="shuffle-btn" title="Shuffle">
+            <svg viewBox="0 0 24 24">
+              <path d="M10.59 9.17L5.41 4H2v2h2.59l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.38 10.82l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.08-3.08z"/>
+            </svg>
+          </button>
+
+          <!-- Previous -->
+          <button class="control-btn" id="prev-btn" title="Previous">
+            <svg viewBox="0 0 24 24">
+              <path d="M6 6h2v12H6zm3.5 6L18 6v12z"/>
+            </svg>
+          </button>
+
+          <!-- Play/Pause -->
+          <button class="control-btn play-pause-btn" id="play-pause-btn" title="Play">
+            <!-- Play Icon -->
+            <svg viewBox="0 0 24 24" id="play-icon">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+            <!-- Pause Icon (hidden by default) -->
+            <svg viewBox="0 0 24 24" id="pause-icon" class="hidden">
+              <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+            </svg>
+          </button>
+
+          <!-- Next -->
+          <button class="control-btn" id="next-btn" title="Next">
+            <svg viewBox="0 0 24 24">
+              <path d="M6 18l8.5-6L6 6zm9-12v12h2V6z"/>
+            </svg>
+          </button>
+
+          <!-- Repeat -->
+          <button class="control-btn" id="repeat-btn" title="Repeat">
+            <svg viewBox="0 0 24 24">
+              <path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Action Row (Search, Volume) -->
+        <div class="action-row" style="justify-content: space-around; width: 180px; margin-top: 0.5rem;">
+          <!-- Search Toggle -->
+          <button class="icon-btn" id="search-toggle-btn" title="Search Music">
+            <svg viewBox="0 0 24 24">
+              <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+            </svg>
+          </button>
+
+          <!-- Volume Popover Control -->
+          <div class="volume-popover">
+            <button class="icon-btn" id="volume-toggle-btn" title="Adjust Volume">
+              <svg viewBox="0 0 24 24" id="volume-icon">
+                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+              </svg>
+            </button>
+            <!-- Sliders pop up above button -->
+            <div class="volume-slider-container" id="volume-slider-container">
+              <input type="range" id="volume-slider" min="0" max="100" value="50">
+              <span id="volume-value">50%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: Profile Panel -->
+      <div class="profile-panel">
+        <!-- Bio Card -->
+        <div class="bio-card">
+          <div class="bio-header">
+            <h3>My Music Bio</h3>
+            <button class="small-btn" id="bio-edit-btn">Edit</button>
+          </div>
+          <p class="bio-text" id="bio-text-display">Welcome to my music profile! Search and pin your favorite songs here.</p>
+          <div class="bio-edit-wrapper hidden" id="bio-edit-wrapper">
+            <textarea class="bio-textarea" id="bio-input" maxlength="200" placeholder="Tell the world about your music taste..."></textarea>
+            <button class="small-btn save" id="bio-save-btn">Save</button>
+          </div>
+        </div>
+
+        <!-- Top 10 Soundtrack -->
+        <div class="soundtrack-card">
+          <h3>Top 10 Soundtrack</h3>
+          <div class="soundtrack-list" id="soundtrack-list">
+            <!-- Soundtrack slots will be rendered dynamically by app.js -->
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- LEFT DRAWER: Search Overlay -->
+    <div class="drawer left" id="search-drawer">
+      <div class="drawer-header">
+        <h3>Search YouTube Music</h3>
+        <button class="drawer-close" id="search-close-btn">
+          <svg viewBox="0 0 24 24">
+            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+          </svg>
+        </button>
+      </div>
+      <div class="search-input-wrapper">
+        <input type="text" class="search-input" id="search-input" placeholder="Search songs, artists, hits...">
+        <svg class="search-icon-svg" viewBox="0 0 24 24">
+          <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+        </svg>
+      </div>
+      <div class="drawer-content" id="search-results-content">
+        <div class="list-container" id="search-results-list">
+          <p class="track-artists" style="text-align: center; margin-top: 2rem;">Type to search YouTube Music...</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SETUP SCREEN: GOOGLE SIGN-IN -->
+  <div class="setup-screen" id="setup-screen">
+    <div class="setup-card" style="width: 440px;">
+      <img src="logo.png" alt="Groovio Logo" style="width: 70px; height: 70px; border-radius: 50%; margin-bottom: 1rem; box-shadow: 0 8px 24px rgba(255, 0, 51, 0.4); object-fit: cover;">
+      <h2 class="setup-title" style="margin-bottom: 0.25rem;">Groovio</h2>
+      <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem; font-family: var(--font-body);">YouTube Music Turntable Player</p>
+      
+      <div class="setup-steps" style="margin-bottom: 1.5rem; text-align: left; width: 100%;">
+        <h4 style="color: white; margin-bottom: 0.5rem; font-size: 0.95rem; font-weight: 600;">Google Cloud Setup:</h4>
+        <ol style="padding-left: 1.25rem; color: var(--text-secondary); font-size: 0.85rem; line-height: 1.5; display: flex; flex-direction: column; gap: 0.4rem;">
+          <li>Go to the <a href="https://console.cloud.google.com/" target="_blank" style="color: var(--yt-red); text-decoration: none; font-weight: 600;">Google Cloud Console</a>.</li>
+          <li>Enable the <strong>YouTube Data API v3</strong>.</li>
+          <li>Configure your OAuth consent screen (set user type to External, Testing).</li>
+          <li>Create an <strong>OAuth Client ID</strong> (Web application).</li>
+          <li>Add Authorized Redirect URI: <code id="uri-copier" style="background: rgba(255, 255, 255, 0.1); padding: 0.1rem 0.35rem; border-radius: 4px; font-family: monospace; color: #fff; font-size: 0.8rem; user-select: all;">http://localhost:3000/</code></li>
+        </ol>
+      </div>
+
+      <div class="input-group" style="margin-bottom: 1.5rem;">
+        <label class="input-label" for="client-id-input">Google Client ID</label>
+        <input type="text" class="input-field" id="client-id-input" placeholder="Paste your Google OAuth Client ID here">
+      </div>
+      
+      <button class="connect-btn" id="google-connect-btn" style="background: white; color: #1f2937; box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1); font-weight: 600; border: 1px solid #d1d5db;">
+        <svg viewBox="0 0 48 48" style="width: 18px; height: 18px; margin-right: 0.75rem; display: inline-block; vertical-align: middle;">
+          <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+          <path fill="#4285F4" d="M46.5 24c0-1.61-.15-3.16-.42-4.69H24v8.89h12.66c-.55 2.92-2.19 5.39-4.66 7.05l7.25 5.62c4.24-3.9 6.75-9.65 6.75-16.87z"/>
+          <path fill="#FBBC05" d="M10.54 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.98-6.19z"/>
+          <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.25-5.62c-2.03 1.37-4.63 2.18-8.64 2.18-6.26 0-11.57-4.22-13.46-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+        </svg>
+        Sign In with Google
+      </button>
+    </div>
+  </div>
+
+  <!-- Hidden YouTube Player Container -->
+  <div id="yt-player" style="position: absolute; top:-9999px; left:-9999px; width:1px; height:1px; opacity:0; pointer-events:none;"></div>
+
+  <!-- TOAST ALERTS -->
+  <div class="toast" id="toast">Connecting...</div>
+
+  <!-- Main App Module -->
+  <script type="module" src="app.js"></script>
+</body>
+</html>
