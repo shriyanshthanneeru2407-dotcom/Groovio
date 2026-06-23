@@ -1,0 +1,16 @@
+{
+  "name": "groovio",
+  "version": "1.0.0",
+  "description": "Groovio - Spotify Controller & Music Visualizer",
+  "scripts": {
+    "dev": "npx -y http-server -p 3000 --cors -o"
+  },
+  "keywords": [
+    "spotify",
+    "music",
+    "controller",
+    "visualizer"
+  ],
+  "author": "",
+  "license": "ISC"
+}
